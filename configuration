@@ -1,0 +1,3 @@
+addons_path=/mnt/server/projects/lua/wow-addons
+api_keys_file=$HOME/.wow-addons-api-keys
+csv_file=./versions.csv

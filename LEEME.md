@@ -15,7 +15,7 @@ Scripts Bash para automatizar el mantenimiento de compatibilidad de mis **addons
 
 - Bash
 - `curl` y `jq` (para `1-get-versions.sh`)
-- Modificar la variable de `configuration.sh`.
+- Modificar la variable de `configuration`.
   - La ruta raíz donde se encuentran nuestros addons en desarollo
   - El fichero donde se encuentran las API KEYS para publicar.
 - Añadir el campo obligatorio `## TAG_ORDER` al fichero `.toc` de cada addon (sólo hay que hacerlo la primera vez). Ver más abajo `2-update-addons.sh`.
@@ -26,7 +26,7 @@ Scripts Bash para automatizar el mantenimiento de compatibilidad de mis **addons
 
 Consulta la API de [BlizzTrack](https://blizztrack.com/) para obtener las últimas versiones de los diferentes clientes de World of Warcraft.
 
-Genera una salida en formato CSV al fichero indicado en `configuration.sh`:
+Genera una salida en formato CSV al fichero indicado en `configuration`:
 
 Cada línea del CSV contiene tres campos:
 
@@ -139,7 +139,7 @@ Usando el script `release.sh` de `BigWings Packager`, se encarga de generar los 
 - WoWInterface
 - Wago
 
-Es necesario poner en la variable `api_keys_file` en `configuration.sh` la ruta del fichero que las contiene (no olvidar chmod 600 al fichero). Ejemplo de formato:
+Es necesario poner en la variable `api_keys_file` en `configuration` la ruta del fichero que las contiene (no olvidar chmod 600 al fichero). Ejemplo de formato:
 
 ```ini
 WAGO_API_TOKEN="YOUR WAGO API KEY"

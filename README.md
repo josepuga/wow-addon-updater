@@ -15,7 +15,7 @@ Bash scripts to automate compatibility maintenance for my **World of Warcraft ad
 
 - Bash.
 - `curl` and `jq` (for `1-get-versions.sh`).
-- Configure the variables in `configuration.sh`:
+- Configure the variables in `configuration`:
   - The root directory containing your addon development projects.
   - The file containing the API keys used for publishing.
 - Add the required `## TAG_ORDER` field to each addon's `.toc` file (only necessary once). See the `2-update-addon.sh` section below.
@@ -25,7 +25,7 @@ Bash scripts to automate compatibility maintenance for my **World of Warcraft ad
 
 Queries the [BlizzTrack](https://blizztrack.com/) API to retrieve the latest versions of the different World of Warcraft clients.
 
-Generates a CSV file at the location specified in `configuration.sh`.
+Generates a CSV file at the location specified in `configuration`.
 
 Each CSV line contains three fields:
 
@@ -137,7 +137,7 @@ Uses the `release.sh` script from **BigWigs Packager** to generate the correspon
 - WoWInterface
 - Wago
 
-The `api_keys_file` variable in `configuration.sh` must contain the path to the file holding the API keys (remember to set its permissions with `chmod 600`).
+The `api_keys_file` variable in `configuration` must contain the path to the file holding the API keys (remember to set its permissions with `chmod 600`).
 
 Example format:
 

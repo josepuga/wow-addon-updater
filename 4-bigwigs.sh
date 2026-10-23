@@ -58,6 +58,21 @@ if [[ -n "$(git -C "$addon_path" status --porcelain)" ]]; then
 fi
 
 
+# Refuse to publish a version already processed successfully on this machine.
+# This local marker does not query CurseForge, Wago or WoWInterface.
+state_dir="$script_dir/releases/.published"
+marker_file="$state_dir/$addon_name-$git_tag"
+[[ ! -e "$marker_file" ]] || {
+    >&2 echo "ERROR: $addon_name $git_tag already published by this script"
+    exit 1
+}
+
+# Ensure the changelog includes this version.
+grep -Fqx -- "### $version" "$addon_path/CHANGELOG.md" || {
+    >&2 echo "ERROR: CHANGELOG.md has no entry for $version"
+    exit 1
+}
+
 ## BigWigs
 
 # Load API keys
@@ -81,3 +96,8 @@ then
     exit 1
 fi
 #TODO: DELETE DIRECTORY AND ZIP
+
+
+# Mark as published only after release.sh exits successfully.
+mkdir -p -- "$state_dir"
+printf '%s\n' "$(git -C "$addon_path" rev-parse HEAD)" > "$marker_file"

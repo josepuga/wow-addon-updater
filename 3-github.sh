@@ -54,6 +54,14 @@ version=$(sed -n 's/^## Version:[[:space:]]*//p' "$toc_file")
 
     git_version="${git_tag#v}"
     if [[ "$version" == "$git_version" ]]; then
+        if [[ -n "$(git status --porcelain)" ]]; then
+            >&2 echo "ERROR: Uncommitted changes with already tagged version $version"
+            exit 1
+        fi
+        if [[ "$(git rev-parse HEAD)" != "$local_commit" ]]; then
+            >&2 echo "ERROR: HEAD does not match Git tag $git_tag"
+            exit 1
+        fi
         echo "Version $version already tagged. No changes to publish."
         exit 0
     fi
@@ -72,6 +80,12 @@ version=$(sed -n 's/^## Version:[[:space:]]*//p' "$toc_file")
         exit 1
     }
     [[ -z "$remote_new_tag" ]] || { >&2 echo "ERROR: Remote tag v$version already exists"; exit 1; }
+
+    # The new version must include the changelog entry.
+    grep -Fqx -- "### $version" CHANGELOG.md || {
+        >&2 echo "ERROR: CHANGELOG.md has no entry for $version"
+        exit 1
+    }
 
     echo "New version: $git_version -> $version. Committing to GitHub..."
     git add . || { >&2 echo "ERROR: git add failed"; exit 1; }

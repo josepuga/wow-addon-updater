@@ -9,7 +9,7 @@ declare -a CLIENTS=(
     wow_classic         # Mist of Pandarian
     wow_classic_era     # Classic
     wow_anniversary     # TBC
-    wow_classic_beta    # Forever
+    wowf                # Forever
 )
 
 # Dependencies
